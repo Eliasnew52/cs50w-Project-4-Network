@@ -1,5 +1,26 @@
 {% extends "network/layout.html" %}
+{% load widget_tweaks %}
 
 {% block body %}
-    TODO
+<h1>Feed</h1>
+{% if user.is_authenticated %}
+<h2> New Post</h2>
+<div class="container card my-5 p-5 form" style="max-width: 400px;">
+    <form method="post" action="{% url 'index' %}">
+        {% csrf_token %}
+
+        <!-- Content -->
+        <div data-mdb-input-init class="form-outline mb-4">
+            {{ form.Content.label_tag }}
+            {{ form.Content | add_class:"form-control" }}
+        </div>
+
+        
+        <!-- Submit button -->
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Post</button>
+        </div>
+    </form>
+</div>
+{% endif %}
 {% endblock %}
