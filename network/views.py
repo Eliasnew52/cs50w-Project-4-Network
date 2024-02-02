@@ -5,10 +5,12 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import NewPostForm
 
-from .models import User
+from .models import User, Post
 
 
 def index(request):
+    #This will Ensure to Retrieve The Newst Posts
+    AllPost = Post.objects.all().order_by("id").reverse()
     username = request.user
     if request.method == "POST":
         form = NewPostForm(request.POST)
@@ -19,7 +21,7 @@ def index(request):
             return HttpResponse(form.errors.as_json())
     else:
         form = NewPostForm()
-        return render(request, "network/index.html", {"form": form})
+        return render(request, "network/index.html", {"form": form, "AllPosts":AllPost})
 
 
 def login_view(request):
